@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Destroyed = SpriteKind.create()
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScene()) {
         starShip.setImage(img`
@@ -27,7 +30,7 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isGameScene()) {
+    if (isGameScene() && starShip.kind() == SpriteKind.Player) {
         projectile = sprites.createProjectileFromSprite(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -238,6 +241,7 @@ info.onLifeZero(function () {
     game.over(false, effects.dissolve)
 })
 function destroyStarship (thisStarship: Sprite) {
+    thisStarship.setKind(SpriteKind.Destroyed)
     thisStarship.destroy(effects.fire, 500)
     info.changeLifeBy(-1)
     pause(3000)
