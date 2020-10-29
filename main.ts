@@ -1,36 +1,28 @@
 namespace SpriteKind {
     export const Destroyed = SpriteKind.create()
 }
+function getStarshipImgDefault () {
+    return starShips[0]
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . 5 . 5 . . . . 5 . 5 . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgUp())
     }
 })
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isGameScene()) {
+    if (isGameScreen()) {
         starShip.setFlag(SpriteFlag.Ghost, false)
         effects.clearParticles(starShip)
     }
 })
+function getStartScreenImg () {
+    return backgrounds[0]
+}
+function getStarshipImgRight () {
+    return starShips[1]
+}
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isGameScene() && starShip.kind() == SpriteKind.Player) {
+    if (isGameScreen() && starShip.kind() == SpriteKind.Player) {
         projectile = sprites.createProjectileFromSprite(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -52,140 +44,44 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Released, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . . 5 . . . . . . 5 . . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgDefault())
     }
 })
+function getStarshipImgDown () {
+    return starShips[4]
+}
+function getMeteorImgSmall () {
+    return meteors[2]
+}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . . . 5 . . . . . . 5 . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgLeft())
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . . 5 . . . . . . 5 . . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgDefault())
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . . 5 . . . . . . 5 . . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgDefault())
     }
 })
+function getMeteorImgLarge () {
+    return meteors[0]
+}
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . 5 . . . . . . 5 . . . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgRight())
     }
 })
-function isGameScene () {
-    if (scene.backgroundImage().equals(backgrounds[1])) {
-        return 1
-    }
-    return 0
+function getStarshipImgUp () {
+    return starShips[3]
 }
 function newStarship () {
-    starShip = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . 8 8 . . . . . . . 
-        . . . . . . . 8 8 . . . . . . . 
-        . . . . . . . 8 8 . . . . . . . 
-        . . . . . . . 8 8 . . . . . . . 
-        . . . . . . 7 8 8 7 . . . . . . 
-        . . . . . 8 7 8 8 7 8 . . . . . 
-        . . . . . 8 8 8 8 8 8 . . . . . 
-        . . . . 8 8 8 9 9 8 8 8 . . . . 
-        . . . . 8 8 8 9 9 8 8 8 . . . . 
-        . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-        . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-        . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-        6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-        8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-        . . . . 5 . . . . . . 5 . . . . 
-        `, SpriteKind.Player)
+    starShip = sprites.create(getStarshipImgDefault(), SpriteKind.Player)
     starShip.setFlag(SpriteFlag.StayInScreen, true)
     starShip.setPosition(80, 100)
     controller.moveSprite(starShip, 100, 100)
@@ -193,53 +89,28 @@ function newStarship () {
     starShip.startEffect(effects.starField)
 }
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . . 5 . . . . . . 5 . . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgDefault())
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (isGameScene()) {
-        starShip.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . . 8 8 . . . . . . . 
-            . . . . . . 7 8 8 7 . . . . . . 
-            . . . . . 8 7 8 8 7 8 . . . . . 
-            . . . . . 8 8 8 8 8 8 . . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . . 8 8 8 9 9 8 8 8 . . . . 
-            . . . 6 8 8 9 9 9 9 8 8 6 . . . 
-            . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
-            . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
-            6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
-            8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
-            . . . . . . . . . . . . . . . . 
-            `)
+    if (isGameScreen()) {
+        starShip.setImage(getStarshipImgDown())
     }
 })
 info.onLifeZero(function () {
     pause(3000)
     game.over(false, effects.dissolve)
 })
+function getGameScreenImg () {
+    return backgrounds[1]
+}
+function getStarshipImgLeft () {
+    return starShips[2]
+}
+function getMeteorImgMedium () {
+    return meteors[1]
+}
 function destroyStarship (thisStarship: Sprite) {
     thisStarship.setKind(SpriteKind.Destroyed)
     thisStarship.destroy(effects.fire, 500)
@@ -247,25 +118,14 @@ function destroyStarship (thisStarship: Sprite) {
     pause(3000)
     newStarship()
 }
+function isGameScreen () {
+    if (scene.backgroundImage().equals(getGameScreenImg())) {
+        return 1
+    }
+    return 0
+}
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    if (otherSprite.image.equals(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . c c c . . . . . . 
-        . . . . . . a b a a . . . . . . 
-        . . . . . c b a f c a c . . . . 
-        . . . . c b b b f f a c c . . . 
-        . . . . b b f a b b a a c . . . 
-        . . . . c b f f b a f c a . . . 
-        . . . . . c a a c b b a . . . . 
-        . . . . . . c c c c . . . . . . 
-        . . . . . . . c . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `)) {
+    if (otherSprite.image.equals(getMeteorImgSmall())) {
         otherSprite.destroy()
         info.changeScoreBy(1)
         if (info.score() == 20) {
@@ -274,79 +134,11 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
             starShip.say("Level up", 500)
         }
     }
-    if (otherSprite.image.equals(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . c c c c . . 
-        . c c c c c . c c c c c f c c . 
-        c c a c c c c c 8 f f c f f c c 
-        c a f a a c c a f f c a a f f c 
-        c a 8 f a a c a c c c a a a a c 
-        c b c f a a a a a c c c c c c c 
-        c b b a a c f 8 a c c c 8 c c c 
-        . c b b a b c f a a a 8 8 c c . 
-        . . . . a a b b b a a 8 a c . . 
-        . . . . c b c a a c c b . . . . 
-        . . . . b b c c a b b a . . . . 
-        . . . . b b a b a 6 a . . . . . 
-        . . . . c b b b 6 6 c . . . . . 
-        . . . . . c a 6 6 b c . . . . . 
-        . . . . . . . c c c . . . . . . 
-        `)) {
-        otherSprite.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . c c c . . . . . . 
-            . . . . . . a b a a . . . . . . 
-            . . . . . c b a f c a c . . . . 
-            . . . . c b b b f f a c c . . . 
-            . . . . b b f a b b a a c . . . 
-            . . . . c b f f b a f c a . . . 
-            . . . . . c a a c b b a . . . . 
-            . . . . . . c c c c . . . . . . 
-            . . . . . . . c . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `)
+    if (otherSprite.image.equals(getMeteorImgMedium())) {
+        otherSprite.setImage(getMeteorImgSmall())
     }
-    if (otherSprite.image.equals(img`
-        . . . . . . . . . c c 8 . . . . 
-        . . . . . . 8 c c c f 8 c c . . 
-        . . . c c 8 8 f c a f f f c c . 
-        . . c c c f f f c a a f f c c c 
-        8 c c c f f f f c c a a c 8 c c 
-        c c c b f f f 8 a c c a a a c c 
-        c a a b b 8 a b c c c c c c c c 
-        a f c a a b b a c c c c c f f c 
-        a 8 f c a a c c a c a c f f f c 
-        c a 8 a a c c c c a a f f f 8 a 
-        . a c a a c f f a a b 8 f f c a 
-        . . c c b a f f f a b b c c 6 c 
-        . . . c b b a f f 6 6 a b 6 c . 
-        . . . c c b b b 6 6 a c c c c . 
-        . . . . c c a b b c c c . . . . 
-        . . . . . c c c c c c . . . . . 
-        `)) {
-        otherSprite.setImage(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . c c c c . . 
-            . c c c c c . c c c c c f c c . 
-            c c a c c c c c 8 f f c f f c c 
-            c a f a a c c a f f c a a f f c 
-            c a 8 f a a c a c c c a a a a c 
-            c b c f a a a a a c c c c c c c 
-            c b b a a c f 8 a c c c 8 c c c 
-            . c b b a b c f a a a 8 8 c c . 
-            . . . . a a b b b a a 8 a c . . 
-            . . . . c b c a a c c b . . . . 
-            . . . . b b c c a b b a . . . . 
-            . . . . b b a b a 6 a . . . . . 
-            . . . . c b b b 6 6 c . . . . . 
-            . . . . . c a 6 6 b c . . . . . 
-            . . . . . . . c c c . . . . . . 
-            `)
+    if (otherSprite.image.equals(getMeteorImgLarge())) {
+        otherSprite.setImage(getMeteorImgMedium())
     }
     pause(500)
 })
@@ -356,6 +148,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let meteor: Sprite = null
 let projectile: Sprite = null
 let starShip: Sprite = null
+let meteors: Image[] = []
+let starShips: Image[] = []
 let backgrounds: Image[] = []
 backgrounds = [img`
     ................................................................................................................................................................
@@ -600,32 +394,153 @@ backgrounds = [img`
     ................................................................................................................................................................
     ................................................................................................................................................................
     `]
-scene.setBackgroundImage(backgrounds[0])
+starShips = [img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . 7 8 8 7 . . . . . . 
+    . . . . . 8 7 8 8 7 8 . . . . . 
+    . . . . . 8 8 8 8 8 8 . . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . 6 8 8 9 9 9 9 8 8 6 . . . 
+    . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
+    . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
+    6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
+    8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
+    . . . . 5 . . . . . . 5 . . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . 7 8 8 7 . . . . . . 
+    . . . . . 8 7 8 8 7 8 . . . . . 
+    . . . . . 8 8 8 8 8 8 . . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . 6 8 8 9 9 9 9 8 8 6 . . . 
+    . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
+    . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
+    6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
+    8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
+    . . . 5 . . . . . . 5 . . . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . 7 8 8 7 . . . . . . 
+    . . . . . 8 7 8 8 7 8 . . . . . 
+    . . . . . 8 8 8 8 8 8 . . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . 6 8 8 9 9 9 9 8 8 6 . . . 
+    . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
+    . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
+    6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
+    8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
+    . . . . . 5 . . . . . . 5 . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . 7 8 8 7 . . . . . . 
+    . . . . . 8 7 8 8 7 8 . . . . . 
+    . . . . . 8 8 8 8 8 8 . . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . 6 8 8 9 9 9 9 8 8 6 . . . 
+    . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
+    . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
+    6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
+    8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
+    . . . 5 . 5 . . . . 5 . 5 . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . . 8 8 . . . . . . . 
+    . . . . . . 7 8 8 7 . . . . . . 
+    . . . . . 8 7 8 8 7 8 . . . . . 
+    . . . . . 8 8 8 8 8 8 . . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . . 8 8 8 9 9 8 8 8 . . . . 
+    . . . 6 8 8 9 9 9 9 8 8 6 . . . 
+    . . 6 8 8 8 9 2 2 9 8 8 8 6 . . 
+    . 6 8 8 8 8 8 9 9 8 8 8 8 8 6 . 
+    6 8 8 8 2 8 8 8 8 8 8 2 8 8 8 6 
+    8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
+    . . . . . . . . . . . . . . . . 
+    `]
+meteors = [img`
+    . . . . . . . . . c c 8 . . . . 
+    . . . . . . 8 c c c f 8 c c . . 
+    . . . c c 8 8 f c a f f f c c . 
+    . . c c c f f f c a a f f c c c 
+    8 c c c f f f f c c a a c 8 c c 
+    c c c b f f f 8 a c c a a a c c 
+    c a a b b 8 a b c c c c c c c c 
+    a f c a a b b a c c c c c f f c 
+    a 8 f c a a c c a c a c f f f c 
+    c a 8 a a c c c c a a f f f 8 a 
+    . a c a a c f f a a b 8 f f c a 
+    . . c c b a f f f a b b c c 6 c 
+    . . . c b b a f f 6 6 a b 6 c . 
+    . . . c c b b b 6 6 a c c c c . 
+    . . . . c c a b b c c c . . . . 
+    . . . . . c c c c c c . . . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . c c c c . . 
+    . c c c c c . c c c c c f c c . 
+    c c a c c c c c 8 f f c f f c c 
+    c a f a a c c a f f c a a f f c 
+    c a 8 f a a c a c c c a a a a c 
+    c b c f a a a a a c c c c c c c 
+    c b b a a c f 8 a c c c 8 c c c 
+    . c b b a b c f a a a 8 8 c c . 
+    . . . . a a b b b a a 8 a c . . 
+    . . . . c b c a a c c b . . . . 
+    . . . . b b c c a b b a . . . . 
+    . . . . b b a b a 6 a . . . . . 
+    . . . . c b b b 6 6 c . . . . . 
+    . . . . . c a 6 6 b c . . . . . 
+    . . . . . . . c c c . . . . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . c c c . . . . . . 
+    . . . . . . a b a a . . . . . . 
+    . . . . . c b a f c a c . . . . 
+    . . . . c b b b f f a c c . . . 
+    . . . . b b f a b b a a c . . . 
+    . . . . c b f f b a f c a . . . 
+    . . . . . c a a c b b a . . . . 
+    . . . . . . c c c c . . . . . . 
+    . . . . . . . c . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `]
+scene.setBackgroundImage(getStartScreenImg())
 pause(3000)
-scene.setBackgroundImage(backgrounds[1])
+scene.setBackgroundImage(getGameScreenImg())
 tiles.setTilemap(tilemap`Level_0`)
 info.setScore(0)
 info.setLife(3)
 newStarship()
 game.onUpdateInterval(1000, function () {
-    meteor = sprites.create(img`
-        . . . . . . . . . c c 8 . . . . 
-        . . . . . . 8 c c c f 8 c c . . 
-        . . . c c 8 8 f c a f f f c c . 
-        . . c c c f f f c a a f f c c c 
-        8 c c c f f f f c c a a c 8 c c 
-        c c c b f f f 8 a c c a a a c c 
-        c a a b b 8 a b c c c c c c c c 
-        a f c a a b b a c c c c c f f c 
-        a 8 f c a a c c a c a c f f f c 
-        c a 8 a a c c c c a a f f f 8 a 
-        . a c a a c f f a a b 8 f f c a 
-        . . c c b a f f f a b b c c 6 c 
-        . . . c b b a f f 6 6 a b 6 c . 
-        . . . c c b b b 6 6 a c c c c . 
-        . . . . c c a b b c c c . . . . 
-        . . . . . c c c c c c . . . . . 
-        `, SpriteKind.Enemy)
+    meteor = sprites.create(getMeteorImgLarge(), SpriteKind.Enemy)
     meteor.lifespan = 8000
     tiles.placeOnTile(meteor, tiles.getTileLocation(randint(0, 10), 0))
     if (info.score() == 20) {
