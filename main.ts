@@ -9,6 +9,9 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         starShip.setImage(getStarshipImgUp())
     }
 })
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    music.setVolume(0)
+})
 controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
         starShip.setFlag(SpriteFlag.Ghost, false)
@@ -41,6 +44,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
             `, starShip, 0, -100)
+        music.pewPew.play()
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Released, function () {
@@ -123,6 +127,7 @@ sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
 })
 function destroyStarship (thisStarship: Sprite) {
     thisStarship.setKind(SpriteKind.Destroyed)
+    music.playMelody("C5 A B G A F G E ", 1500)
     thisStarship.destroy(effects.fire, 500)
     info.changeLifeBy(-1)
     pause(3000)
@@ -167,6 +172,7 @@ let speedMin = 0
 let aMeteors: Image[] = []
 let aStarShips: Image[] = []
 let aBackgrounds: Image[] = []
+music.setVolume(20)
 aBackgrounds = [img`
     ................................................................................................................................................................
     ................................................................................................................................................................
@@ -551,6 +557,7 @@ aMeteors = [img`
 speedMin = 15
 speedMax = 30
 scene.setBackgroundImage(getStartScreenImg())
+music.magicWand.playUntilDone()
 pause(3000)
 scene.setBackgroundImage(getGameScreenImg())
 tiles.setTilemap(tilemap`Level_0`)
