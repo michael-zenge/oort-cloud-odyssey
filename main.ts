@@ -72,6 +72,9 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
 function getMeteorImgLarge () {
     return meteors[0]
 }
+scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
+    spawnMeteor(sprite)
+})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
         starShip.setImage(getStarshipImgRight())
@@ -80,10 +83,14 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 function getStarshipImgUp () {
     return starShips[3]
 }
+function spawnMeteor (thisMeteor: Sprite) {
+    tiles.placeOnTile(thisMeteor, tiles.getTileLocation(randint(0, 10), 0))
+    thisMeteor.vy = randint(velocityMin, velocityMax)
+}
 function newStarship () {
     starShip = sprites.create(getStarshipImgDefault(), SpriteKind.Player)
     starShip.setFlag(SpriteFlag.StayInScreen, true)
-    starShip.setPosition(80, 100)
+    starShip.setPosition(80, 120)
     controller.moveSprite(starShip, 100, 100)
     starShip.setFlag(SpriteFlag.Ghost, true)
     starShip.startEffect(effects.starField)
@@ -111,6 +118,9 @@ function getStarshipImgLeft () {
 function getMeteorImgMedium () {
     return meteors[1]
 }
+sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
+    sprite.startEffect(effects.ashes, 50)
+})
 function destroyStarship (thisStarship: Sprite) {
     thisStarship.setKind(SpriteKind.Destroyed)
     thisStarship.destroy(effects.fire, 500)
@@ -126,13 +136,15 @@ function isGameScreen () {
 }
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (otherSprite.image.equals(getMeteorImgLarge())) {
+        otherSprite.startEffect(effects.ashes, 100)
         otherSprite.setImage(getMeteorImgMedium())
     } else if (otherSprite.image.equals(getMeteorImgMedium())) {
+        otherSprite.startEffect(effects.ashes, 75)
         otherSprite.setImage(getMeteorImgSmall())
     } else {
         otherSprite.destroy()
         info.changeScoreBy(1)
-        if (info.score() % 10 == 0) {
+        if (info.score() % 20 == 0) {
             starShip.say("Level up", 500)
             velocityMax += 5
             velocityMax += 10
@@ -146,6 +158,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let meteor: Sprite = null
 let projectile: Sprite = null
 let starShip: Sprite = null
+let velocityMax = 0
+let velocityMin = 0
 let meteors: Image[] = []
 let starShips: Image[] = []
 let backgrounds: Image[] = []
@@ -530,18 +544,18 @@ meteors = [img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `]
-let velocityMin = 15
-let velocityMax = 30
+velocityMin = 15
+velocityMax = 30
 scene.setBackgroundImage(getStartScreenImg())
 pause(3000)
 scene.setBackgroundImage(getGameScreenImg())
 tiles.setTilemap(tilemap`Level_0`)
+scene.centerCameraAt(0, 76)
 info.setScore(0)
 info.setLife(3)
 newStarship()
 game.onUpdateInterval(1000, function () {
     meteor = sprites.create(getMeteorImgLarge(), SpriteKind.Enemy)
-    meteor.lifespan = 8000
-    tiles.placeOnTile(meteor, tiles.getTileLocation(randint(0, 10), 0))
-    meteor.vy = randint(velocityMin, velocityMax)
+    meteor.lifespan = 12000
+    spawnMeteor(meteor)
 })
