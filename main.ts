@@ -149,6 +149,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
             velocityMax += 5
             velocityMax += 10
         }
+        if (info.score() % 50 == 0) {
+            starShip.say("Bonus", 500)
+            info.changeLifeBy(1)
+        }
     }
     pause(500)
 })
