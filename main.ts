@@ -2,7 +2,7 @@ namespace SpriteKind {
     export const Destroyed = SpriteKind.create()
 }
 function getStarshipImgDefault () {
-    return starShips[0]
+    return aStarShips[0]
 }
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
@@ -16,10 +16,10 @@ controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function getStartScreenImg () {
-    return backgrounds[0]
+    return aBackgrounds[0]
 }
 function getStarshipImgRight () {
-    return starShips[1]
+    return aStarShips[1]
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen() && starShip.kind() == SpriteKind.Player) {
@@ -49,10 +49,10 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
     }
 })
 function getStarshipImgDown () {
-    return starShips[4]
+    return aStarShips[4]
 }
 function getMeteorImgSmall () {
-    return meteors[2]
+    return aMeteors[2]
 }
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
@@ -70,7 +70,7 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
     }
 })
 function getMeteorImgLarge () {
-    return meteors[0]
+    return aMeteors[0]
 }
 scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
     spawnMeteor(sprite)
@@ -81,11 +81,11 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     }
 })
 function getStarshipImgUp () {
-    return starShips[3]
+    return aStarShips[3]
 }
 function spawnMeteor (thisMeteor: Sprite) {
     tiles.placeOnTile(thisMeteor, tiles.getTileLocation(randint(0, 10), 0))
-    thisMeteor.vy = randint(velocityMin, velocityMax)
+    thisMeteor.vy = randint(speedMin, speedMax)
 }
 function newStarship () {
     starShip = sprites.create(getStarshipImgDefault(), SpriteKind.Player)
@@ -110,13 +110,13 @@ info.onLifeZero(function () {
     game.over(false, effects.dissolve)
 })
 function getGameScreenImg () {
-    return backgrounds[1]
+    return aBackgrounds[1]
 }
 function getStarshipImgLeft () {
-    return starShips[2]
+    return aStarShips[2]
 }
 function getMeteorImgMedium () {
-    return meteors[1]
+    return aMeteors[1]
 }
 sprites.onDestroyed(SpriteKind.Enemy, function (sprite) {
     sprite.startEffect(effects.ashes, 50)
@@ -146,8 +146,8 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
         info.changeScoreBy(1)
         if (info.score() % 20 == 0) {
             starShip.say("Level up", 500)
-            velocityMax += 5
-            velocityMax += 10
+            speedMax += 5
+            speedMax += 10
         }
         if (info.score() % 50 == 0) {
             starShip.say("Bonus", 500)
@@ -162,12 +162,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let meteor: Sprite = null
 let projectile: Sprite = null
 let starShip: Sprite = null
-let velocityMax = 0
-let velocityMin = 0
-let meteors: Image[] = []
-let starShips: Image[] = []
-let backgrounds: Image[] = []
-backgrounds = [img`
+let speedMax = 0
+let speedMin = 0
+let aMeteors: Image[] = []
+let aStarShips: Image[] = []
+let aBackgrounds: Image[] = []
+aBackgrounds = [img`
     ................................................................................................................................................................
     ................................................................................................................................................................
     ................................................................................................................................................................
@@ -410,7 +410,7 @@ backgrounds = [img`
     ................................................................................................................................................................
     ................................................................................................................................................................
     `]
-starShips = [img`
+aStarShips = [img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . 8 8 . . . . . . . 
     . . . . . . . 8 8 . . . . . . . 
@@ -496,7 +496,7 @@ starShips = [img`
     8 8 8 2 5 2 8 8 8 8 2 5 2 8 8 8 
     . . . . . . . . . . . . . . . . 
     `]
-meteors = [img`
+aMeteors = [img`
     . . . . . . . . . c c 8 . . . . 
     . . . . . . 8 c c c f 8 c c . . 
     . . . c c 8 8 f c a f f f c c . 
@@ -548,8 +548,8 @@ meteors = [img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `]
-velocityMin = 15
-velocityMax = 30
+speedMin = 15
+speedMax = 30
 scene.setBackgroundImage(getStartScreenImg())
 pause(3000)
 scene.setBackgroundImage(getGameScreenImg())
