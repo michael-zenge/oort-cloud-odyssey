@@ -4,18 +4,20 @@ namespace SpriteKind {
 function getStarshipImgDefault () {
     return aStarShips[0]
 }
+function setNormVolume () {
+    music.setVolume(relVolume / 100 * 255)
+}
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
+        startStarship()
         starShip.setImage(getStarshipImgUp())
     }
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    music.setVolume(0)
-})
-controller.anyButton.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
-        starShip.setFlag(SpriteFlag.Ghost, false)
-        effects.clearParticles(starShip)
+        relVolume = (relVolume + 20) % 120
+        starShip.say("FX" + relVolume + "%", 1000)
+        setNormVolume()
     }
 })
 function getStartScreenImg () {
@@ -26,6 +28,7 @@ function getStarshipImgRight () {
 }
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen() && starShip.kind() == SpriteKind.Player) {
+        startStarship()
         projectile = sprites.createProjectileFromSprite(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -58,18 +61,25 @@ function getStarshipImgDown () {
 function getMeteorImgSmall () {
     return aMeteors[2]
 }
+function startStarship () {
+    starShip.setFlag(SpriteFlag.Ghost, false)
+    effects.clearParticles(starShip)
+}
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
+        startStarship()
         starShip.setImage(getStarshipImgLeft())
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     if (isGameScreen()) {
+        startStarship()
         starShip.setImage(getStarshipImgDefault())
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Released, function () {
     if (isGameScreen()) {
+        startStarship()
         starShip.setImage(getStarshipImgDefault())
     }
 })
@@ -81,6 +91,7 @@ scene.onHitWall(SpriteKind.Enemy, function (sprite, location) {
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (isGameScreen()) {
+        startStarship()
         starShip.setImage(getStarshipImgRight())
     }
 })
@@ -101,6 +112,7 @@ function newStarship () {
 }
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
     if (isGameScreen()) {
+        startStarship()
         starShip.setImage(getStarshipImgDefault())
     }
 })
@@ -167,12 +179,15 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let meteor: Sprite = null
 let projectile: Sprite = null
 let starShip: Sprite = null
-let speedMax = 0
-let speedMin = 0
 let aMeteors: Image[] = []
 let aStarShips: Image[] = []
 let aBackgrounds: Image[] = []
-music.setVolume(20)
+let speedMax = 0
+let speedMin = 0
+let relVolume = 0
+relVolume = 20
+speedMin = 15
+speedMax = 30
 aBackgrounds = [img`
     ................................................................................................................................................................
     ................................................................................................................................................................
@@ -285,13 +300,13 @@ aBackgrounds = [img`
     ................................................................................................................................................................
     ............1...................................................................................................................................................
     ................................................................................................................................................................
-    ..............................................................................................................................................1..1....1...1111..
-    ..............................................................................................................................................1..1....1...1..1..
-    ..............................................................................................................................................1..1....1...1..1..
-    ..............................................................................................................................................1..1....1...1..1..
-    ..............................................................................................................................................1..1....1...1..1..
-    ...............................................................................................................................................1.1....1...1..1..
-    ................................................................................................................................................1.....1.1.1111..
+    ..............................................................................................................................................1..1....1......1..
+    ..............................................................................................................................................1..1....1......1..
+    ..............................................................................................................................................1..1....1......1..
+    ..............................................................................................................................................1..1....1......1..
+    ..............................................................................................................................................1..1....1......1..
+    ...............................................................................................................................................1.1....1......1..
+    ................................................................................................................................................1.....1.1....1..
     ................................................................................................................................................................
     ................................................................................................................................................................
     `, img`
@@ -554,8 +569,7 @@ aMeteors = [img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `]
-speedMin = 15
-speedMax = 30
+setNormVolume()
 scene.setBackgroundImage(getStartScreenImg())
 music.magicWand.playUntilDone()
 pause(3000)
